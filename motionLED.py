@@ -8,10 +8,11 @@ import constants
 # Set up the motion sensor on GPIO 17
 pir = MotionSensor(17)
 
-# Turns on or off LED when called
+# Sets the LED state based on the name and value parameters passed
 ## :param str name: name of the command (Eg. turn, brightness, color, colorTem)
 ## :param value: value of the command
 ## :return: request response object
+## :raises RequestException: If the request fails for any reason
 def setLED(name: str, value) -> requests.Response:
     try:
         r = requests.put(
@@ -34,6 +35,7 @@ def setLED(name: str, value) -> requests.Response:
 
 # Returns the state of the LED
 ## :return: request response object
+## :raises RequestException: If the request fails for any reason
 def getStateLED() -> requests.Response:
     try:
         r = requests.get(
@@ -59,7 +61,7 @@ def getStateLED() -> requests.Response:
 ## :param value: value of the command
 ## :param float api_delay: delay between API requests in seconds (Recommended: 0.1 or higher)
 ## :return: None if an invalid name parameter is passed
-def fadeLED(name, value, api_delay: float):
+def fadeLED(name: str, value, api_delay: float):
     led_data = getStateLED().json()
     initial = led_data["data"]["properties"][2]["brightness"]
 
