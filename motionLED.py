@@ -1,9 +1,9 @@
+import constants  # Local constants file
+import datetime
+import requests
+import sys
 from gpiozero import MotionSensor
 from time import sleep
-import requests
-import datetime
-
-import constants
 
 # Set up the motion sensor on GPIO 17
 pir = MotionSensor(17)
@@ -96,7 +96,7 @@ def fadeLED(name: str, value, api_delay: float):
         setLED("turn", "off")
 
 
-if __name__ == "__main__":
+def main():
     while True:
         if pir.motion_detected:
             print(datetime.datetime.now().strftime("%X"), ": Motion detected!")
@@ -118,3 +118,11 @@ if __name__ == "__main__":
             print(datetime.datetime.now().strftime("%X"), ": No motion detected!")
             setLED("turn", "off")
             pir.wait_for_motion()
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\nInterrupted. Exiting...")
+        sys.exit(0)
