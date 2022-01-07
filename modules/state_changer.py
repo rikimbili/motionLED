@@ -42,7 +42,6 @@ def fadeColorLED(
                 curr_color[j] += 1
 
         last_r = setLED("color", rgbToJson(curr_color))
-        getStateLED()
         sleep(delay)
 
     return last_r

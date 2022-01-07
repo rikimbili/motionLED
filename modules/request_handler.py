@@ -42,7 +42,6 @@ def setLED(name: str, value) -> requests.Response:
         )
         r.raise_for_status()
     except requests.exceptions.HTTPError as e:
-        print("Request Exception:", e)
         handleRateLimit(r)
 
     return r
@@ -67,7 +66,6 @@ def getStateLED() -> requests.Response:
         )
         r.raise_for_status()
     except requests.exceptions.HTTPError as e:
-        print("Request Exception:", e)
         handleRateLimit(r)
 
     return r

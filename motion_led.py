@@ -15,7 +15,6 @@ def main():
         if pir.motion_detected:
             print(datetime.datetime.now().strftime("%X"), ": Motion detected!")
             setLED("turn", "on")
-            # fadeLED("color", color.AQUAMARINE1)
             pir.wait_for_no_motion()
         else:
             # False positive threshold: Check each second in range if motion is detected,
