@@ -6,7 +6,7 @@ from .request_handler import setLED, getStateLED  # Local module file
 from .utilities import rgbToJson  # Local module file
 from time import sleep
 
-
+# TODO: Fix 'colorTemInKelvin' property being replaced for 'color' on specific color changes
 def fadeColorLED(
     rgb_value: tuple, led_data: dict, delay: float = 0.2
 ) -> requests.Response or None:
@@ -76,7 +76,7 @@ def fadeBrightnessLED(
             sleep(delay)
 
 
-#! TODO: Fix sudden brightness change when turn command is used
+# TODO: Fix sudden brightness change when turn command is used
 def fadeLED(name: str, value, delay: float = 0.2) -> requests.Response or None:
     """
     Attempts to animate the LED as it transitions from one state to another
