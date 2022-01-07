@@ -27,6 +27,6 @@ GOVEE_API_KEY = "YOUR API KEY HERE"
 LED_DEVICE = "YOUR DEVICE ID HERE"
 LED_MODEL = "YOUR DEVICE MODEL HERE"
 ```
-
-Lastly, just run the python script by running the main file
+Feel free to explore the code and change it around to your liking
+Lastly, just run the python script by running the main file:
 > python motion_led.py
