@@ -12,10 +12,11 @@ Currently, the functions that add animation are not used in the main function as
 
 ## Usage
 ### Requirements before you set it up
-* Your LED strip must be powered and connected to a wifi router. Note: It doesn't have to be the same router as the raspberry pi, as long as both are connected to the internet, the request will go through
-* Make sure you are running Raspbian 10 (Buster) or 11 (Bullseye) and at least Python 3.9 
-* You will need a Govee API key. You can get it through the mobile app as shown [here](https://twitter.com/goveeofficial/status/1383962664217444353)
-* You will need to know the GPIO Pin you connected your pir sensor to (I recommend GPIO 17). If you are not sure take a look at the [pinout](https://pinout.xyz)
+* The LED strip must be powered and connected to a wifi router. Note: It doesn't have to be the same router as the raspberry pi, as long as both are connected to the internet, the request will go through
+* Raspbian 10 (Buster) or 11 (Bullseye) and at least Python 3.9 
+* A Govee API key. You can get it through the mobile app as shown [here](https://twitter.com/goveeofficial/status/1383962664217444353)
+* Know the GPIO Pin you connected your pir sensor to (I recommend GPIO 17). If you are not sure take a look at the [pinout](https://pinout.xyz)
+* Install requests by running on the terminal ```pip install requests``` 
 
 ### Steps to setup the constants file
 1. Create a constants.py file in ./modules/constants/
