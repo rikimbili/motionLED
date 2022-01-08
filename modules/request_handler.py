@@ -5,10 +5,11 @@ import requests
 from .constants import constants  # Local constants file
 from time import sleep
 
-
+# TODO: Handle HTTP connection error
 def handleRateLimit(r: requests.Response) -> None:
     """
     Handles the rate limit for the Govee API by sleeping for the time remaining
+
     :param response r: request response object
     :return: None
     """
@@ -22,7 +23,8 @@ def handleRateLimit(r: requests.Response) -> None:
 
 def setLED(name: str, value) -> requests.Response:
     """
-    Sets the LED state based on the name and value parameters passed
+    Sets the LED state specified by command name and value
+
     :param str name: name of the command (Eg. turn, brightness, color, colorTem)
     :param value: value of the command
     :return: request response object
@@ -50,6 +52,7 @@ def setLED(name: str, value) -> requests.Response:
 def getStateLED() -> requests.Response:
     """
     Returns the state of the LED
+
     :return: request response object
     :raises RequestException: If the request fails for any reason
     """

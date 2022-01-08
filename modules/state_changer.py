@@ -12,6 +12,7 @@ def fadeColorLED(
 ) -> requests.Response or None:
     """
     Fades the LED from current color into the passed color
+
     :param tuple rgb_value: RGB value to change color to
     :param dict led_data: JSON object of the LED state
     :param float delay: delay between API requests in seconds (Recommended: 0.2 or higher)
@@ -52,6 +53,7 @@ def fadeBrightnessLED(
 ) -> requests.Response or None:
     """
     Fades the LED from current brightness into the passed one
+
     :param int value: brightness value to change to
     :param dict led_data: JSON object of the LED state
     :param float delay: delay between API requests in seconds (Recommended: 0.2 or higher)
@@ -80,6 +82,7 @@ def fadeBrightnessLED(
 def fadeLED(name: str, value, delay: float = 0.2) -> requests.Response or None:
     """
     Attempts to animate the LED as it transitions from one state to another
+
     :param str name: name of the command (turn, brightness, color)
     :param value: value of the command or RGB value as a tuple
     :param float delay: delay between API requests in seconds (Recommended: 0.2 or higher)
