@@ -31,4 +31,4 @@ LED_MODEL = "YOUR_DEVICE_MODEL_HERE"
 GPIO_PIN = YOUR_GPIO_PIN_HERE
 ```
 Lastly, just run the python script by running the main file:
-> python motion_led.py
+```python motion_led.py```
