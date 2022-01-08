@@ -9,7 +9,7 @@ from time import sleep
 
 def setStateFromMotionLED(pir: MotionSensor, led_on: bool) -> None:
     """
-    Sets the LED state based on the motion sensor state
+    Sets the LED "on" or "off" state based on the pir sensor reading
     :param MotionSensor pir: motion sensor object
     :param bool led_on: current state of the LED
     :return: None
