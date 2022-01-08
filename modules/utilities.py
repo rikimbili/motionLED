@@ -2,9 +2,11 @@
 Utilities module with aiding functions for the main project modules
 """
 
+
 def rgbToJson(rgb_list: list) -> dict:
     """
     Converts RGB values to a JSON object
+
     :param list rgb_list: RGB value to convert
     :return: JSON object as a dictionary
     """

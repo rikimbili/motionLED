@@ -1,22 +1,31 @@
 import modules.constants.color_constants as color  # Stores different color constants as tuples
 import datetime
 import sys
+import threading
 from modules.request_handler import *  # Local module file
 from modules.state_changer import *  # Local module file
 from gpiozero import MotionSensor
 from time import sleep
 
 
-def setStateFromMotionLED(pir: MotionSensor, led_on: bool) -> None:
+# Set up the motion sensor on GPIO_PIN
+pir: MotionSensor = MotionSensor(constants.GPIO_PIN)
+
+# LED Power state: This global variable is used to keep track of the LED power state
+led_on: bool = getStateLED().json()["data"]["properties"][1]["powerState"] == "on"
+
+
+def setStateFromMotionLED() -> None:
     """
     Sets the LED "on" or "off" state based on the pir sensor reading
-    :param MotionSensor pir: motion sensor object
-    :param bool led_on: current state of the LED
+
     :return: None
     """
+    global led_on
+
     while True:
         # False positive threshold: Check each second in range if motion is detected
-        for i in range(180):
+        for i in range(constants.MOTION_DETECT_THRESHOLD):
             if pir.motion_detected:
                 break
             sleep(1)
@@ -36,11 +45,9 @@ def setStateFromMotionLED(pir: MotionSensor, led_on: bool) -> None:
 
 
 def main():
-    # Set up the motion sensor on GPIO_PIN and get current power state of the LED
-    pir: MotionSensor = MotionSensor(constants.GPIO_PIN)
-    led_on: bool = getStateLED().json()["data"]["properties"][1]["powerState"] == "on"
-
-    setStateFromMotionLED(pir, led_on)
+    motion_state_t = threading.Thread(target=setStateFromMotionLED, daemon=True)
+    motion_state_t.start()
+    motion_state_t.join()
 
 
 if __name__ == "__main__":
