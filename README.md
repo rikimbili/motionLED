@@ -25,9 +25,10 @@ Currently, the functions that add animation are not used in the main function as
 SERVER_URL_PUT = "https://developer-api.govee.com/v1/devices/control"
 SERVER_URL_GET = "https://developer-api.govee.com/v1/devices"
 SERVER_URL_STATE = "https://developer-api.govee.com/v1/devices/state"
-GOVEE_API_KEY = "YOUR_API_KEY_HERE"
-LED_DEVICE = "YOUR_DEVICE_ID_HERE"
-LED_MODEL = "YOUR_DEVICE_MODEL_HERE"
-GPIO_PIN = YOUR_GPIO_PIN_HERE
+GOVEE_API_KEY = "[YOUR_API_KEY_HERE]"
+LED_DEVICE = "[YOUR_DEVICE_ID_HERE]"
+LED_MODEL = "[YOUR_DEVICE_MODEL_HERE]"
+GPIO_PIN = [YOUR_GPIO_PIN_HERE]
+MOTION_DETECT_THRESHOLD = [THRESHOLD_IN_SECONDS_HERE]
 ```
 Lastly, just run the python script by running the main file on your terminal ```python motion_led.py```
