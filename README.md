@@ -20,7 +20,7 @@ Currently, the functions that add animation are not used in the main function as
 
 ### Steps to setup the constants file
 1. Create a constants.py file in ./modules/constants/
-2. Add these constants and fill out the rest based on your specific LED strip
+2. Add these constants and fill out the rest based on your specific setup
 ```
 SERVER_URL_PUT = "https://developer-api.govee.com/v1/devices/control"
 SERVER_URL_GET = "https://developer-api.govee.com/v1/devices"
