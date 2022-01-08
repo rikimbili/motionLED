@@ -1,6 +1,6 @@
 # motionLED
 motionLED is a small program that aims to automate the control of Govee LEDs (Light strips) through motion detection using a PIR sensor attached to a Raspberry Pi 4
-![alt text](https://i.imgur.com/PRnKKXI.jpeg)
+![alt text](https://i.imgur.com/BCDY754.png)
 ## Features
 So far, only a handful of features are implemented:
 * Automatically turn off/on LED based on readings from the PIR sensor
