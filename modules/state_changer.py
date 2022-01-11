@@ -2,7 +2,7 @@
 LED state changer module
 """
 import requests
-from .request_handler import setLED, getStateLED  # Local module file
+from .request_handler import *  # Local module file
 from .utilities import rgbToJson  # Local module file
 from time import sleep
 
@@ -25,7 +25,7 @@ def fadeColorLED(
     if new_color == curr_color:
         return None
 
-    if led_data["data"]["properties"][1]["powerState"] == "off":
+    if not getPowerStateLED():  # If the LED is off, just set the color without fading
         return setLED("color", rgbToJson(new_color))
 
     # Calculate the maximum R, G, or B difference between the current and new color
@@ -34,7 +34,7 @@ def fadeColorLED(
         abs(new_color[1] - curr_color[1]),
         abs(new_color[2] - curr_color[2]),
     )
-    # Change the current color values by a stepping of 2 at a time until curr_color == new_color
+    # Change the current color values by a stepping of 1 at a time until curr_color == new_color
     for i in range(max_diff):
         for j in range(3):
             if curr_color[j] > new_color[j]:
@@ -54,10 +54,10 @@ def fadeBrightnessLED(
     """
     Fades the LED from current brightness into the passed one
 
-    :param int value: brightness value to change to
+    :param int value: Brightness value to change to
     :param dict led_data: JSON object of the LED state
-    :param float delay: delay between API requests in seconds (Recommended: 0.2 or higher)
-    :return: request response object from last request or None if no request is made
+    :param float delay: Delay between API requests in seconds (Recommended: 0.2 or higher)
+    :return: Request response object from last request or None if no request is made
     """
     initial = led_data["data"]["properties"][2]["brightness"]
     final = value
@@ -83,10 +83,10 @@ def fadeLED(name: str, value, delay: float = 0.2) -> requests.Response or None:
     """
     Attempts to animate the LED as it transitions from one state to another
 
-    :param str name: name of the command (turn, brightness, color)
-    :param value: value of the command or RGB value as a tuple
-    :param float delay: delay between API requests in seconds (Recommended: 0.2 or higher)
-    :return: request response object or None if no request is made
+    :param str name: Name of the command (turn, brightness, color)
+    :param value: Value of the command or RGB value as a tuple
+    :param float delay: Delay between API requests in seconds (Recommended: 0.2 or higher)
+    :return: Request response object or None if no request is made
     """
     led_data = getStateLED().json()
     power_state = led_data["data"]["properties"][1]["powerState"]
