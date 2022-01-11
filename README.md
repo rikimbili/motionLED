@@ -29,6 +29,7 @@ GOVEE_API_KEY = "[YOUR_API_KEY_HERE]"
 LED_DEVICE = "[YOUR_DEVICE_ID_HERE]"
 LED_MODEL = "[YOUR_DEVICE_MODEL_HERE]"
 GPIO_PIN = [YOUR_GPIO_PIN_HERE]
-MOTION_DETECT_THRESHOLD = 180
+MOTION_DETECT_THRESHOLD = 180  # Seconds to wait to avoid false positives
+REQUEST_ERROR_SLEEP_TIME = 15  # Seconds to wait if an API error occurs
 ```
 Lastly, just run the python script by running the main file on your terminal ```python motion_led.py```
