@@ -2,8 +2,10 @@
 Govee API requests handling module
 """
 import requests
-from requests.models import Request
+
+from .utilities import tupleToDictRGB
 from .constants.constants import *  # Local constants file
+from .constants.color_constants import *  # Local constants file
 from time import sleep
 
 
@@ -66,17 +68,31 @@ def getStateLED(error_delay=REQUEST_ERROR_SLEEP_TIME) -> requests.Response:
     return r
 
 
-# TODO: Complete functionality
-def setAutoLED(
-    name: str, value, error_delay=REQUEST_ERROR_SLEEP_TIME
-) -> requests.Response:
+def getBrightnessStateLED() -> int:
     """
-    Sets the LED state and handles inconsistencies in the API
-    such as when colorTemInKelvin is encountered instead of color
+    Gets the current brightness of the LED
 
-    :return: Request response object
+    :return: Brightness of the LED
     """
-    return setLED(name, value, error_delay)
+    return getStateLED().json()["data"]["properties"][2]["brightness"]
+
+
+def getColorStateLED() -> dict:
+    """
+    Gets the current color RGB value of the LED
+
+    :return: dict of rgb values for the current color
+    """
+    color = getStateLED().json()["data"]["properties"][3]
+
+    if color.get("colorTemInKelvin") is not None:
+        color = KELVIN_TABLE.get(color["colorTemInKelvin"])
+        return tupleToDictRGB(color)
+    elif color.get("color") is not None:
+        return color["color"]
+    else:
+        print("Unknown LED color key")
+        return None
 
 
 def getPowerStateLED() -> bool:
@@ -86,16 +102,3 @@ def getPowerStateLED() -> bool:
     :return: True if the LED is on, False if the LED is off
     """
     return getStateLED().json()["data"]["properties"][1]["powerState"] == "on"
-
-
-def getColorStateLED() -> dict:
-    """
-    Gets the current color value of the LED
-
-    :return: dict of rgb values for the current color
-    """
-    color = getStateLED().json()["data"]["properties"][3]
-    if "color" in color.keys():
-        return color["color"]
-    else:
-        return None

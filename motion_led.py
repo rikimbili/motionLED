@@ -55,13 +55,17 @@ def setStateFromRoutineLED() -> None:
     """
     schedule.every().day.at(WAKE_UP_TIME).do(wakeUpRoutine)
 
+    while True:
+        schedule.run_pending()
+        sleep(1)
+
 
 def main():
     motion_state_t = threading.Thread(target=setStateFromMotionLED, daemon=True)
     motion_state_t.start()
-
-    # setStateFromRoutineLED()
-
+    routine_t = threading.Thread(target=setStateFromRoutineLED, daemon=True)
+    routine_t.start()
+    routine_t.join()
     motion_state_t.join()
 
 

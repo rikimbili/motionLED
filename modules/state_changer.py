@@ -3,30 +3,28 @@ LED state changer module
 """
 import requests
 from .request_handler import *  # Local module file
-from .utilities import rgbToJson  # Local module file
+from .utilities import tupleToDictRGB  # Local module file
 from time import sleep
 
-# TODO: Fix 'colorTemInKelvin' property being replaced for 'color' on specific color changes
-def fadeColorLED(
-    rgb_value: tuple, led_data: dict, delay: float = 0.2
-) -> requests.Response or None:
+
+def fadeColorLED(rgb_value: tuple, delay: float = 0.2) -> requests.Response or None:
     """
     Fades the LED from current color into the passed color
 
     :param tuple rgb_value: RGB value to change color to
-    :param dict led_data: JSON object of the LED state
     :param float delay: delay between API requests in seconds (Recommended: 0.2 or higher)
     :return: request response object from last request or None if no request is made
     """
-    new_color = [rgb_value[0], rgb_value[1], rgb_value[2]]
-    curr_color = led_data["data"]["properties"][3]["color"]
+    curr_color = getColorStateLED()
     curr_color = [curr_color["r"], curr_color["g"], curr_color["b"]]
+    new_color = [rgb_value["r"], rgb_value["g"], rgb_value["b"]]
 
     if new_color == curr_color:
         return None
 
-    if not getPowerStateLED():  # If the LED is off, just set the color without fading
-        return setLED("color", rgbToJson(new_color))
+    # If the LED is off, just set the color without fading
+    if not getPowerStateLED():
+        return setLED("color", tupleToDictRGB(new_color))
 
     # Calculate the maximum R, G, or B difference between the current and new color
     max_diff = max(
@@ -42,38 +40,36 @@ def fadeColorLED(
             elif curr_color[j] < new_color[j]:
                 curr_color[j] += 1
 
-        last_r = setLED("color", rgbToJson(curr_color))
+        last_r = setLED("color", tupleToDictRGB(curr_color))
         sleep(delay)
 
     return last_r
 
 
-def fadeBrightnessLED(
-    value: int, led_data: dict, delay: float = 0.2
-) -> requests.Response or None:
+def fadeBrightnessLED(value: int, delay: float = 0.2) -> requests.Response or None:
     """
     Fades the LED from current brightness into the passed one
 
     :param int value: Brightness value to change to
-    :param dict led_data: JSON object of the LED state
     :param float delay: Delay between API requests in seconds (Recommended: 0.2 or higher)
     :return: Request response object from last request or None if no request is made
     """
-    initial = led_data["data"]["properties"][2]["brightness"]
+    initial = getBrightnessStateLED()
     final = value
 
     if initial == final:
         return None
 
-    if led_data["data"]["properties"][1]["powerState"] == "off":
+    # If the LED is off, just set the brightness without fading
+    if not getPowerStateLED():
         return setLED("brightness", final)
 
     if final > initial:
-        for i in range(initial, final):
+        for i in range(initial, final + 1):
             setLED("brightness", i)
             sleep(delay)
     else:
-        for i in range(initial, final, -1):
+        for i in range(initial, final - 1, -1):
             setLED("brightness", i)
             sleep(delay)
 
@@ -100,18 +96,18 @@ def fadeLED(name: str, value, delay: float = 0.2) -> requests.Response or None:
             setLED("turn", "on")
             sleep(delay)
             led_data["data"]["properties"][1]["powerState"] = "on"
-            return fadeBrightnessLED(curr_brightness, led_data, delay)
+            return fadeBrightnessLED(curr_brightness, delay)
         elif value == "off" and power_state == "on":
-            fadeBrightnessLED(1, led_data, delay)
+            fadeBrightnessLED(1, delay)
             setLED("turn", "off")
             sleep(delay)
             return setLED("brightness", curr_brightness)
 
     elif name == "brightness":
-        return fadeBrightnessLED(value, led_data, delay)
+        return fadeBrightnessLED(value, delay)
 
     elif name == "color":
-        return fadeColorLED(value, led_data, delay)
+        return fadeColorLED(value, delay)
 
     else:
         return None
