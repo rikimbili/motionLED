@@ -53,7 +53,7 @@ def setStateFromRoutineLED() -> None:
 
     :return: None
     """
-    schedule.every().day.at(WAKE_UP_TIME).do(wakeUpRoutine)
+    schedule.every().day.at(WAKE_UP_TIME).do(wakeUpRoutine, led_on)
 
     while True:
         schedule.run_pending()
