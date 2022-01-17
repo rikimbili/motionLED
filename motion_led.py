@@ -16,7 +16,6 @@ pir: MotionSensor = MotionSensor(GPIO_PIN)
 
 # LED Power state: This global variable is used to keep track of the LED power state
 led_on: bool = getPowerStateLED()
-override_led_on = False
 
 
 def setStateFromMotionLED() -> None:
@@ -30,7 +29,7 @@ def setStateFromMotionLED() -> None:
     while True:
         # False positive threshold: Check each second in range if motion is detected
         for i in range(MOTION_DETECT_THRESHOLD):
-            if pir.motion_detected or override_led_on:
+            if pir.motion_detected:
                 break
             sleep(1)
 
@@ -38,7 +37,6 @@ def setStateFromMotionLED() -> None:
             print(datetime.datetime.now().strftime("%X"), ": Motion detected!")
             setLED("turn", "on")
             led_on = True
-            override_led_on = False
             pir.wait_for_no_motion()
         else:
             print(datetime.datetime.now().strftime("%X"), ": No motion detected!")

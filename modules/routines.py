@@ -13,7 +13,7 @@ def wakeUpRoutine(led_on: bool) -> None:
     :param led_on: Current LED state
     :return: None
     """
-    if led_on:
+    if led_on is True:
         curr_color = getColorStateLED()
         curr_brightness = getBrightnessStateLED()
 
