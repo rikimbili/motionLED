@@ -14,7 +14,7 @@ So far, a handful of features are implemented:
 * Raspbian 10 (Buster) or 11 (Bullseye) and at least Python 3.9 
 * A Govee API key. You can get it through the mobile app as shown [here](https://twitter.com/goveeofficial/status/1383962664217444353)
 * Know the GPIO Pin you connected your pir sensor to (I recommend GPIO 17). If you are not sure take a look at the [pinout](https://pinout.xyz)
-* Install requests by running on the terminal ```pip install requests``` 
+* Install every module dependency in requirements.txt 
 
 ### Steps to setup the constants file
 1. Create a constants.py file in ./modules/constants/
