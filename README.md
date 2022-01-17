@@ -2,13 +2,11 @@
 motionLED is a small program that aims to automate the control of Govee LEDs (Light strips) through motion detection using a PIR sensor attached to a Raspberry Pi 4
 ![alt text](https://i.imgur.com/BCDY754.png)
 ## Features
-So far, only a handful of features are implemented:
+So far, a handful of features are implemented:
 * Automatically turn off/on LED based on readings from the PIR sensor
+* Routines to change the LED state at specified intervals/times/dates
 * Functions that make http requests to GoveeAPI in order to control/get data from the LEDs
 * Functions that change the state of the LEDs (power on or off, brightness and rgb color) using a fade/merge animation
-
-Currently, the functions that add animation are not used in the main function as I'm still thinking on ways to use those\
-(like changing color at a certain hour or when a certain condition is met)
 
 ## Usage
 ### Requirements before you set it up
@@ -16,7 +14,7 @@ Currently, the functions that add animation are not used in the main function as
 * Raspbian 10 (Buster) or 11 (Bullseye) and at least Python 3.9 
 * A Govee API key. You can get it through the mobile app as shown [here](https://twitter.com/goveeofficial/status/1383962664217444353)
 * Know the GPIO Pin you connected your pir sensor to (I recommend GPIO 17). If you are not sure take a look at the [pinout](https://pinout.xyz)
-* Install requests by running on the terminal ```pip install requests``` 
+* Install every module dependency in requirements.txt 
 
 ### Steps to setup the constants file
 1. Create a constants.py file in ./modules/constants/
@@ -31,7 +29,7 @@ LED_MODEL = "[YOUR_DEVICE_MODEL_HERE]"
 GPIO_PIN = [YOUR_GPIO_PIN_HERE]
 MOTION_DETECT_THRESHOLD = 180  # Seconds to wait to avoid false positives
 REQUEST_ERROR_SLEEP_TIME = 15  # Seconds to wait if an API error occurs
-WAKE_UP_TIME = "08:40"  # Your personal wake up time for the routine
-MAX_BRIGHTNESS = 90  # Max brightness of the LED (Percentage)
+WAKE_UP_TIME = "08:00"  # Your personal wake up time for the routines
+MAX_BRIGHTNESS = 90  # Max brightness (Percentage) that the LED can reach
 ```
 Lastly, just run the python script by running the main file on your terminal ```python motion_led.py```
