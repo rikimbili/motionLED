@@ -25,4 +25,4 @@ def wakeUpRoutine(led_on: bool) -> None:
         fadeLED("color", curr_color, 0.5)
     else:
         sleep(1)
-        wakeUpRoutine()
+        wakeUpRoutine(led_on)
