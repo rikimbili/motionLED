@@ -14,9 +14,6 @@ from time import sleep
 # Set up the motion sensor on GPIO_PIN
 pir: MotionSensor = MotionSensor(GPIO_PIN)
 
-# LED Power state: This global variable is used to keep track of the LED power state
-led_on: bool = getPowerStateLED()
-
 
 def setStateFromMotionLED() -> None:
     """
@@ -24,7 +21,6 @@ def setStateFromMotionLED() -> None:
 
     :return: None
     """
-    global led_on
 
     while True:
         # False positive threshold: Check each second in range if motion is detected
@@ -36,12 +32,10 @@ def setStateFromMotionLED() -> None:
         if pir.motion_detected:
             print(datetime.datetime.now().strftime("%X"), ": Motion detected!")
             setLED("turn", "on")
-            led_on = True
             pir.wait_for_no_motion()
         else:
             print(datetime.datetime.now().strftime("%X"), ": No motion detected!")
             setLED("turn", "off")
-            led_on = False
             pir.wait_for_motion()
 
 
@@ -51,7 +45,7 @@ def setStateFromRoutineLED() -> None:
 
     :return: None
     """
-    schedule.every().day.at(WAKE_UP_TIME).do(wakeUpRoutine, led_on)
+    schedule.every().day.at(WAKE_UP_TIME).do(wakeUpRoutine)
 
     while True:
         schedule.run_pending()

@@ -5,15 +5,14 @@ from .request_handler import *  # Local module file
 from .state_changer import fadeLED  # Local constants file
 
 
-def wakeUpRoutine(led_on: bool) -> None:
+def wakeUpRoutine() -> None:
     """
     Set LED to color red for 10 minutes, then reverts to previous color
     This feature is based on this study: https://www.nature.com/articles/s41598-021-02311-1
 
-    :param led_on: Current LED state
     :return: None
     """
-    if led_on is True:
+    if getPowerStateLED() is True:
         curr_color = getColorStateLED()
         curr_brightness = getBrightnessStateLED()
 
@@ -24,5 +23,5 @@ def wakeUpRoutine(led_on: bool) -> None:
         fadeLED("brightness", curr_brightness, 0.5)
         fadeLED("color", curr_color, 0.5)
     else:
-        sleep(1)
-        wakeUpRoutine(led_on)
+        sleep(5)
+        wakeUpRoutine()
