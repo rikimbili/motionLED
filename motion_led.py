@@ -31,12 +31,12 @@ def setStateFromMotionLED() -> None:
             sleep(1)
 
         if pir.motion_detected:
-            # If the last motion sensor state was no motion detected, display the motion detected message
+            # If the last motion sensor state was no motion detected, turn on the LED and display motion detected
             if lastState is False:
                 print(datetime.datetime.now().strftime("%X"), ": Motion detected!")
+                lastState = True
+                setLED("turn", "on")
 
-            lastState = True
-            setLED("turn", "on")
             pir.wait_for_no_motion()
         elif not pir.motion_detected:
             print(datetime.datetime.now().strftime("%X"), ": No motion detected!")
