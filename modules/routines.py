@@ -12,16 +12,15 @@ def wakeUpRoutine() -> None:
 
     :return: None
     """
-    if getPowerStateLED() is True:
-        curr_color = getColorStateLED()
-        curr_brightness = getBrightnessStateLED()
-
-        # Set and Keep the LED set to color red for 10 mins
-        fadeLED("color", tupleToDictRGB(RED1), 0.5)
-        fadeLED("brightness", MAX_BRIGHTNESS, 0.5)
-        sleep(10 * 60)
-        fadeLED("brightness", curr_brightness, 0.5)
-        fadeLED("color", curr_color, 0.5)
-    else:
+    while getPowerStateLED() is False:
         sleep(5)
-        wakeUpRoutine()
+
+    curr_color = getColorStateLED()
+    curr_brightness = getBrightnessStateLED()
+
+    # Set and Keep the LED set to color red for 10 mins
+    fadeLED("color", tupleToDictRGB(RED1), 0.5)
+    fadeLED("brightness", MAX_BRIGHTNESS, 0.5)
+    sleep(5 * 60)
+    fadeLED("brightness", curr_brightness, 0.5)
+    fadeLED("color", curr_color, 0.5)
