@@ -21,6 +21,7 @@ def setStateFromMotionLED() -> None:
 
     :return: None
     """
+    lastState: bool = False  # Last state of the motion sensor, on or off
 
     while True:
         # False positive threshold: Check each second in range if motion is detected
@@ -30,11 +31,16 @@ def setStateFromMotionLED() -> None:
             sleep(1)
 
         if pir.motion_detected:
-            print(datetime.datetime.now().strftime("%X"), ": Motion detected!")
+            # If the last motion sensor state was no motion detected, display the motion detected message
+            if lastState is False:
+                print(datetime.datetime.now().strftime("%X"), ": Motion detected!")
+
+            lastState = True
             setLED("turn", "on")
             pir.wait_for_no_motion()
-        else:
+        elif not pir.motion_detected:
             print(datetime.datetime.now().strftime("%X"), ": No motion detected!")
+            lastState = False
             setLED("turn", "off")
             pir.wait_for_motion()
 
