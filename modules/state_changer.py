@@ -74,7 +74,6 @@ def fadeBrightnessLED(value: int, delay: float = 0.2) -> requests.Response or No
             sleep(delay)
 
 
-# TODO: Fix sudden brightness change when turn command is used
 def fadeLED(name: str, value, delay: float = 0.2) -> requests.Response or None:
     """
     Attempts to animate the LED as it transitions from one state to another

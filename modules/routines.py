@@ -19,8 +19,8 @@ def wakeUpRoutine() -> None:
     curr_brightness = getBrightnessStateLED()
 
     # Set and Keep the LED set to color red for 10 mins
-    fadeLED("color", tupleToDictRGB(RED1), 0.5)
-    fadeLED("brightness", MAX_BRIGHTNESS, 0.5)
+    setLED("color", tupleToDictRGB(RED1))
+    setLED("brightness", MAX_BRIGHTNESS)
     sleep(5 * 60)
-    fadeLED("brightness", curr_brightness, 0.5)
-    fadeLED("color", curr_color, 0.5)
+    setLED("brightness", curr_brightness)
+    setLED("color", curr_color)
