@@ -18,8 +18,6 @@ pir: MotionSensor = MotionSensor(GPIO_PIN)
 def setStateFromMotionLED() -> None:
     """
     Sets the LED "on" or "off" state based on the pir sensor reading
-
-    :return: None
     """
     while True:
         # False positive threshold: Check each second in range if motion is detected
@@ -42,10 +40,10 @@ def setStateFromMotionLED() -> None:
 def setStateFromRoutineLED() -> None:
     """
     Sets the LED state based on a schedule/routine
-
-    :return: None
     """
     schedule.every().day.at(WAKE_UP_TIME).do(wakeUpRoutine)
+    schedule.every().day.at(DAY_START_TIME).do(nightToDayRoutine)
+    schedule.every().day.at(NIGHT_START_TIME).do(dayToNightRoutine)
 
     while True:
         schedule.run_pending()

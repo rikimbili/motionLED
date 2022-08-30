@@ -30,6 +30,9 @@ GPIO_PIN = [YOUR_GPIO_PIN_HERE]
 MOTION_DETECT_THRESHOLD = 180  # Seconds to wait to avoid false positives
 REQUEST_ERROR_SLEEP_TIME = 15  # Seconds to wait if an API error occurs
 WAKE_UP_TIME = "08:00"  # Your personal wake up time for the routines
+DAY_START_TIME = "06:00"  # The time the day starts
+NIGHT_START_TIME = "19:00"  # The time the night starts
+MIN_BRIGHTNESS = 40  # Minimum brightness (Percentage)
 MAX_BRIGHTNESS = 90  # Max brightness (Percentage) that the LED can reach
 ```
 Lastly, just run the python script by running the main file on your terminal ```python motion_led.py```
