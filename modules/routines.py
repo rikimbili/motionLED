@@ -37,9 +37,8 @@ def nightToDayRoutine() -> None:
     """
     Changes the LED brightness depending on the time of day
     """
+    while getPowerStateLED() is False:
+        sleep(20)
+
     print("Running night to day routine...")
-    if getPowerStateLED() is False:
-        setLED("brightness", MAX_BRIGHTNESS)
-        setLED("turn", "off")
-    else:
-        fadeBrightnessLED(MAX_BRIGHTNESS, 20)
+    fadeBrightnessLED(MAX_BRIGHTNESS, 20)
